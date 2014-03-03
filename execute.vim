@@ -4,11 +4,11 @@
 " License: Vim license
 
 function! s:GetInterpreterFromShebangLine()
-  let shebang_line = getline(1)
-  let matches = matchlist(shebang_line, '^#!\(.*\)$')
-  if !empty(matches)
-    let interpreter = matches[1]
-    return interpreter
+  let l:shebang_line = getline(1)
+  let l:matches = matchlist(l:shebang_line, '^#!\(.*\)$')
+  if !empty(l:matches)
+    let l:interpreter = l:matches[1]
+    return l:interpreter
   else
     return ""
   end
@@ -23,11 +23,11 @@ function! s:BuildArgString(list)
 endfunction
 
 function! s:Execute(...)
-  let interpreter = s:GetInterpreterFromShebangLine()
-  let argstr = s:BuildArgString(a:000)
-  let filename = fnameescape(expand("%"))
-  if !empty(interpreter)
-    execute("!" . interpreter . " " . filename . " " . argstr)
+  let l:interpreter = s:GetInterpreterFromShebangLine()
+  let l:argstr = s:BuildArgString(a:000)
+  let l:filename = fnameescape(expand("%"))
+  if !empty(l:interpreter)
+    execute("!" . l:interpreter . " " . l:filename . " " . l:argstr)
   else
     echo "The file doesn't assign an interpreter!"
   end
