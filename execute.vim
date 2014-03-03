@@ -33,4 +33,4 @@ function! s:Execute(...)
   end
 endfunction
 
-command! Execute call s:Execute()
+command! -nargs=* Execute call s:Execute(<f-args>)
