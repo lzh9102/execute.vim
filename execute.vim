@@ -14,10 +14,20 @@ function! s:GetInterpreterFromShebangLine()
   end
 endfunction
 
-function! s:Execute()
+function! s:BuildArgString(list)
+  let l:args = []
+  for item in a:list
+    call add(l:args, fnameescape(item))
+  endfor
+  return join(l:args, " ")
+endfunction
+
+function! s:Execute(...)
   let interpreter = s:GetInterpreterFromShebangLine()
+  let argstr = s:BuildArgString(a:000)
+  let filename = fnameescape(expand("%"))
   if !empty(interpreter)
-    execute("!" . interpreter . " " . fnameescape(expand("%")))
+    execute("!" . interpreter . " " . filename . " " . argstr)
   else
     echo "The file doesn't assign an interpreter!"
   end
