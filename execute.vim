@@ -33,4 +33,16 @@ function! s:Execute(...)
   end
 endfunction
 
+let s:prompt_arguments = " "
+function! s:ExecutePromptForArguments()
+  call inputsave()
+  let l:arguments = input('Arguments: ', s:prompt_arguments)
+  call inputrestore()
+  if !empty(l:arguments)
+    execute "Execute " . l:arguments
+    let s:prompt_arguments = l:arguments
+  end
+endfunction
+
 command! -nargs=* Execute call s:Execute(<f-args>)
+command! ExecutePromptForArguments call s:ExecutePromptForArguments()
