@@ -43,7 +43,7 @@ function! s:Execute(...)
   if !empty(l:interpreter)
     execute("!" . l:interpreter . " " . l:filename . " " . l:argstr)
   else
-    echo "The file doesn't assign an interpreter!"
+    echo "No interpreter defined for this file!"
   end
 endfunction
 
