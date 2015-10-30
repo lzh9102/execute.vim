@@ -36,12 +36,20 @@ function! s:BuildArgString(list)
   return join(l:args, " ")
 endfunction
 
+function! s:NVimTermExecute(interpreter, filename, argstr)
+  execute(":terminal " . a:interpreter . " " . a:filename . " " . a:argstr)
+endfunction
+
 function! s:Execute(...)
   let l:interpreter = s:GetInterpreter()
   let l:argstr = s:BuildArgString(a:000)
   let l:filename = fnameescape(expand("%"))
   if !empty(l:interpreter)
-    execute("!" . l:interpreter . " " . l:filename . " " . l:argstr)
+    if has('nvim') " neovim only supports interactive programs with :terminal
+      call s:NVimTermExecute(l:interpreter, l:filename, l:argstr)
+    else
+      execute("!" . l:interpreter . " " . l:filename . " " . l:argstr)
+    end
   else
     echo "No interpreter defined for this file!"
   end
