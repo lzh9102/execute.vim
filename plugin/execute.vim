@@ -37,6 +37,7 @@ function! s:BuildArgString(list)
 endfunction
 
 function! s:NVimTermExecute(interpreter, filename, argstr)
+  -tabnew " open tab before the current tab
   execute(":terminal " . a:interpreter . " " . a:filename . " " . a:argstr)
 endfunction
 
